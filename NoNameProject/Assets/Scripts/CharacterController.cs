@@ -76,10 +76,10 @@ public class CharacterController2D : MonoBehaviour
 			}
 		}
 
-		if (attacking)
+		/*if (attacking)
 		{
 			move = 0;
-		}
+		}*/
 		//only control the player if grounded or airControl is turned on
 		if ((m_Grounded || m_AirControl))
 		{
@@ -166,18 +166,19 @@ public class CharacterController2D : MonoBehaviour
 
 	private void StopAttackAnimation()
 	{
-		_animator.SetBool("Attack", false);
+		//_animator.SetBool("Attack", false);
 		attacking = false;
 	}
 
 	public void Attack(int weapon)
 	{
-		if (m_Grounded)
+		_animator.SetTrigger("Attack");
+		_animator.SetInteger("Weapon", weapon);
+		attacking = true;
+		/*if (m_Grounded)
 		{
-			_animator.SetBool("Attack", true);
-			_animator.SetInteger("Weapon", weapon);
-			attacking = true;
-		}
+
+		}*/
 		
 	}
 	

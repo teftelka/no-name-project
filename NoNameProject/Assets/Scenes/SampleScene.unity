@@ -284,6 +284,10 @@ PrefabInstance:
       propertyPath: pointB
       value: 
       objectReference: {fileID: 570541147}
+    - target: {fileID: 1177244005861491188, guid: 2b618708d89a1a64ba752fa4b87a9e5b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6310648014838564390, guid: 2b618708d89a1a64ba752fa4b87a9e5b, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -488,7 +492,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
-  m_Color: {r: 0.9791918, g: 1, b: 0.0905661, a: 1}
+  m_Color: {r: 0.4513606, g: 0.7924528, b: 0.22128874, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1882,6 +1886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   music: {fileID: 11400000, guid: 88b4959f0b434ca499355b38006a1f47, type: 2}
+  bitBar: {fileID: 349604920}
 --- !u!1001 &1180286781
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2043,6 +2048,10 @@ PrefabInstance:
       propertyPath: pointB
       value: 
       objectReference: {fileID: 1519071072}
+    - target: {fileID: 1177244005861491188, guid: 2b618708d89a1a64ba752fa4b87a9e5b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6310648014838564390, guid: 2b618708d89a1a64ba752fa4b87a9e5b, type: 3}
       propertyPath: m_RootOrder
       value: -1

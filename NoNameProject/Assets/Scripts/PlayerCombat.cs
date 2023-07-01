@@ -15,7 +15,7 @@ public class PlayerCombat : MonoBehaviour
     public float attackRange = 0.5f;
     public LayerMask enemyLayers;
 
-    public float attackRate = 2f;
+    private float attackRate = 4f;
     private float nextAttackTime = 0f;
     
     [SerializeField] private Text enemiesText;
@@ -45,20 +45,19 @@ public class PlayerCombat : MonoBehaviour
         {
             if (Input.GetButtonDown("Attack"))
             {
+                Debug.Log("UPDATE");
                 hitTime = Time.time;
-                attack = true;
-                //исправить
                 nextAttackTime = Time.time + 1f / attackRate;
-                
-                
+
                 float hitDelay = hitTime - bitTime;
                 if ( hitDelay is <= 0.3f or >= 1.72f)
                 {
-                    attackDamage = 100;
-                    isCriticalHit = true;
+                    SetCrit(true);
                 }
                 
-                Debug.Log(hitDelay);
+                Attack();
+                
+                //Debug.Log(hitDelay);
             }
         }
         if (Input.GetButtonDown("Weapon"))
@@ -70,22 +69,36 @@ public class PlayerCombat : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (attack)
-        {
-            controller2D.Attack(weaponId);
-            Attack();
-            attackDamage = defaultDamage;
-            isCriticalHit = false;
-            attack = false;
-        }
+
     }
-    
+
+    private void Attack()
+    {
+        controller2D.Attack(weaponId);
+        GetEnemiesHit();
+        SetCrit(false);
+    }
+
     private void SetAttackWeapon()
     {
         weaponId++;
         if (weaponId > weaponsTotal)
         {
             weaponId = 0;
+        }
+    }
+
+    private void SetCrit(bool isCrit)
+    {
+        if (isCrit)
+        {
+            attackDamage = 100;
+            isCriticalHit = true;
+        }
+        else
+        {
+            attackDamage = defaultDamage;
+            isCriticalHit = false;
         }
     }
 
@@ -99,7 +112,7 @@ public class PlayerCombat : MonoBehaviour
         };
     }
 
-    private void Attack()
+    private void GetEnemiesHit()
     {
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
