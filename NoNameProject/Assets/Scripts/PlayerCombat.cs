@@ -3,10 +3,11 @@ using UnityEngine.UI;
 
 public class PlayerCombat : MonoBehaviour
 {
-    public CharacterController2D controller2D;
     private int weaponId;
     private int weaponsTotal = 2;
     private bool attack;
+    
+    private Animator _animator;
 
     [SerializeField] public int attackDamage;
     public int defaultDamage = 20;
@@ -34,6 +35,8 @@ public class PlayerCombat : MonoBehaviour
 
     void Start()
     {
+        _animator = GetComponentInChildren<Animator>();
+        
         weaponId = 0;
         attackDamage = 20;
         musicGameObject.GetComponent<MusicBit>().ActionBitHit += GetMusicBit;
@@ -73,7 +76,9 @@ public class PlayerCombat : MonoBehaviour
 
     private void Attack()
     {
-        controller2D.Attack(weaponId);
+        _animator.SetTrigger("Attack");
+        _animator.SetInteger("Weapon", weaponId);
+        
         GetEnemiesHit();
         SetCrit(false);
     }
