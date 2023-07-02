@@ -108,8 +108,17 @@ public class CharacterController2D : MonoBehaviour
 				}
 			}
 
+			Vector3 targetVelocity = Vector3.zero;
 			// Move the character by finding the target velocity
-			Vector3 targetVelocity = new Vector2(move * speedMultiplayer, m_Rigidbody2D.velocity.y);
+			if (m_AirControl && !m_Grounded)
+			{ 
+				targetVelocity = new Vector2(move * 5f, m_Rigidbody2D.velocity.y);
+			}
+			else
+			{ 
+				targetVelocity = new Vector2(move * speedMultiplayer, m_Rigidbody2D.velocity.y);
+			}
+			
 			// Animate walking
 			SetAnimationMovement(move);
 
@@ -161,18 +170,6 @@ public class CharacterController2D : MonoBehaviour
 		
 	}
 
-	private void StopAttackAnimation()
-	{
-		attacking = false;
-	}
-
-	public void Attack(int weapon)
-	{
-		_animator.SetTrigger("Attack");
-		_animator.SetInteger("Weapon", weapon);
-		attacking = true;
-	}
-	
 	private void Flip()
 	{
 		// Switch the way the player is labelled as facing.
