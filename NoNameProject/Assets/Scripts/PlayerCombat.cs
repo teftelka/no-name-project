@@ -45,7 +45,6 @@ public class PlayerCombat : MonoBehaviour
         {
             if (Input.GetButtonDown("Attack"))
             {
-                Debug.Log("UPDATE");
                 hitTime = Time.time;
                 nextAttackTime = Time.time + 1f / attackRate;
 
