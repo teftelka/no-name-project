@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController2D controller2D;
     [SerializeField]private float runSpeed = 40f;
     private bool jump;
-    private float horizontal = 0f;
+    private float horizontal;
 
     private void Update()
     {

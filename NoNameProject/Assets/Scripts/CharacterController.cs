@@ -10,7 +10,8 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] private LayerMask m_WhatIsGround;							// A mask determining what is ground to the character
 	[SerializeField] private Transform m_GroundCheck;							// A position marking where to check if the player is grounded.
 	[SerializeField] private Transform m_CeilingCheck;							// A position marking where to check for ceilings
-	[SerializeField] private Collider2D m_CrouchDisableCollider;				// A collider that will be disabled when crouching
+	[SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
+	[SerializeField] private float speedMultiplayer = 10f;
 
 	const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
 	private bool m_Grounded;            // Whether or not the player is grounded.
@@ -35,7 +36,7 @@ public class CharacterController2D : MonoBehaviour
 	private void Awake()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
-		_animator = GetComponent<Animator>();
+		_animator = GetComponentInChildren<Animator>();
 
 		if (OnLandEvent == null)
 			OnLandEvent = new UnityEvent();
@@ -75,11 +76,7 @@ public class CharacterController2D : MonoBehaviour
 				crouch = true;
 			}
 		}
-
-		if (attacking)
-		{
-			move = 0;
-		}
+		
 		//only control the player if grounded or airControl is turned on
 		if ((m_Grounded || m_AirControl))
 		{
@@ -112,7 +109,7 @@ public class CharacterController2D : MonoBehaviour
 			}
 
 			// Move the character by finding the target velocity
-			Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
+			Vector3 targetVelocity = new Vector2(move * speedMultiplayer, m_Rigidbody2D.velocity.y);
 			// Animate walking
 			SetAnimationMovement(move);
 
@@ -166,19 +163,14 @@ public class CharacterController2D : MonoBehaviour
 
 	private void StopAttackAnimation()
 	{
-		_animator.SetBool("Attack", false);
 		attacking = false;
 	}
 
 	public void Attack(int weapon)
 	{
-		if (m_Grounded)
-		{
-			_animator.SetBool("Attack", true);
-			_animator.SetInteger("Weapon", weapon);
-			attacking = true;
-		}
-		
+		_animator.SetTrigger("Attack");
+		_animator.SetInteger("Weapon", weapon);
+		attacking = true;
 	}
 	
 	private void Flip()
