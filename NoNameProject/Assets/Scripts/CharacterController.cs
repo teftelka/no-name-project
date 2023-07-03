@@ -32,6 +32,7 @@ public class CharacterController2D : MonoBehaviour
 	private bool m_wasCrouching = false;
 	private bool attacking = false;
 	private Animator _animator;
+	Vector3 targetVelocity;
 
 	private void Awake()
 	{
@@ -108,7 +109,6 @@ public class CharacterController2D : MonoBehaviour
 				}
 			}
 
-			Vector3 targetVelocity = Vector3.zero;
 			// Move the character by finding the target velocity
 			if (m_AirControl && !m_Grounded)
 			{ 
