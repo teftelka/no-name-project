@@ -473,6 +473,7 @@ GameObject:
   - component: {fileID: 5825470905711274327}
   - component: {fileID: 165888855542378100}
   - component: {fileID: 1428480678627535143}
+  - component: {fileID: 778020715267374913}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -550,6 +551,7 @@ MonoBehaviour:
   swordBasic: {fileID: 11400000, guid: 679bd7aaf2d28ae4b971fd5ed8132f2d, type: 2}
   swordRed: {fileID: 11400000, guid: 427a8d0a1046f3649a6ee19c652be2b9, type: 2}
   swordVip: {fileID: 11400000, guid: 33b33514c94e7b34d826ff7c88509694, type: 2}
+  rightHandWeapon: {fileID: 212000011912858388}
 --- !u!114 &6027460890400218217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -687,6 +689,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.9921131, y: 0.7456112}
   m_EdgeRadius: 0
+--- !u!114 &778020715267374913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000010814477134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7d06c6f75ccb44f8ec5f90d2b34964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1000010922166808
 GameObject:
   m_ObjectHideFlags: 0

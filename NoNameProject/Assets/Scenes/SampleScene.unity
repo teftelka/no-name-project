@@ -1382,10 +1382,6 @@ PrefabInstance:
       propertyPath: musicGameObject
       value: 
       objectReference: {fileID: 1142692529}
-    - target: {fileID: 3335162927281070851, guid: fec00fde06a86b142a8c1db10a1f3e44, type: 3}
-      propertyPath: rightHandWeapon
-      value: 
-      objectReference: {fileID: 1372850609}
     - target: {fileID: 5825470905711274327, guid: fec00fde06a86b142a8c1db10a1f3e44, type: 3}
       propertyPath: coinsText
       value: 
@@ -2101,11 +2097,6 @@ Transform:
   m_Father: {fileID: 1806397088}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1372850609 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 212000011912858388, guid: fec00fde06a86b142a8c1db10a1f3e44, type: 3}
-  m_PrefabInstance: {fileID: 779824252}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1407389892
 GameObject:
   m_ObjectHideFlags: 0
