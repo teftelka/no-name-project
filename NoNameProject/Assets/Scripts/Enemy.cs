@@ -7,7 +7,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private int health;
-    private int maxHealth = 300;
+    [SerializeField] private int maxHealth = 300;
 
     private Animator animator;
     public bool IsDead;

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,6 +28,10 @@ public class PlayerCombat : MonoBehaviour
     private float hitTime;
     private float newTime;
     private bool isCriticalHit;
+    
+    List<string> enemiesHit = new List<string>();
+
+    private Enemy _enemy;
     
     [SerializeField] private Image weaponImage;
     [SerializeField] private Sprite swordSprite;
@@ -121,13 +126,19 @@ public class PlayerCombat : MonoBehaviour
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
         {
-            enemy.GetComponent<Enemy>().TakeDamage(attackDamage, isCriticalHit);
-            if (enemy.GetComponent<Enemy>().IsDead)
+            _enemy = enemy.GetComponent<Enemy>();
+            if (!_enemy.IsDead && !enemiesHit.Contains(enemy.name))
             {
-                enemiesDied++;
-                enemiesText.text = "Enemies: " + enemiesDied;
+                _enemy.TakeDamage(attackDamage, isCriticalHit);
+                enemiesHit.Add(enemy.name);
+                if (_enemy.IsDead)
+                {
+                    enemiesDied++;
+                    enemiesText.text = "Enemies: " + enemiesDied;
+                }
             }
         }
+        enemiesHit.Clear();
     }
 
     private void OnDrawGizmosSelected()
