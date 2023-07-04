@@ -11,7 +11,7 @@ public class PlayerCombat : MonoBehaviour
     private Animator _animator;
 
     [SerializeField] public int attackDamage;
-    public int defaultDamage = 20;
+    public int defaultDamage;
 
     public Transform attackPoint;
     public float attackRange = 0.5f;
@@ -28,22 +28,26 @@ public class PlayerCombat : MonoBehaviour
     private float hitTime;
     private float newTime;
     private bool isCriticalHit;
-    
-    List<string> enemiesHit = new List<string>();
+
+    private readonly List<string> enemiesHit = new List<string>();
 
     private Enemy _enemy;
     
     [SerializeField] private Image weaponImage;
-    [SerializeField] private Sprite swordSprite;
-    [SerializeField] private Sprite hammerSprite;
-    [SerializeField] private Sprite bowSprite;
+    [SerializeField] private WeaponSO swordBasic;
+    [SerializeField] private WeaponSO swordRed;
+    [SerializeField] private WeaponSO swordVip;
 
+    [SerializeField] private SpriteRenderer rightHandWeapon;
+    private WeaponSO currentWeapon;
+    
     void Start()
     {
         _animator = GetComponentInChildren<Animator>();
-        
+
+        SetCurrentWeapon(swordBasic);
         weaponId = 0;
-        attackDamage = 20;
+        
         musicGameObject.GetComponent<MusicBit>().ActionBitHit += GetMusicBit;
     }
     
@@ -101,7 +105,7 @@ public class PlayerCombat : MonoBehaviour
     {
         if (isCrit)
         {
-            attackDamage = 100;
+            attackDamage *=3;
             isCriticalHit = true;
         }
         else
@@ -113,12 +117,27 @@ public class PlayerCombat : MonoBehaviour
 
     private void SetWeaponImage()
     {
-        weaponImage.sprite = weaponId switch
+        switch (weaponId)
         {
-            0 => swordSprite,
-            1 => hammerSprite,
-            _ => bowSprite
-        };
+            case 0:
+                SetCurrentWeapon(swordBasic);
+                break;
+            case 1:
+                SetCurrentWeapon(swordRed);
+                break;
+            case 2:
+                SetCurrentWeapon(swordVip);
+                break;
+        }
+    }
+
+    private void SetCurrentWeapon(WeaponSO weaponSo)
+    {
+        currentWeapon = weaponSo;
+        attackDamage = currentWeapon.damage;
+        defaultDamage = attackDamage;
+        rightHandWeapon.sprite = currentWeapon.sprite;
+        weaponImage.sprite = currentWeapon.sprite;
     }
 
     private void GetEnemiesHit()

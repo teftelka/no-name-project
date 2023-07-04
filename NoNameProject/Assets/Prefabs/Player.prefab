@@ -490,7 +490,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -6.16, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4000011636810948}
   - {fileID: 4000011422903296}
@@ -547,9 +547,9 @@ MonoBehaviour:
   enemiesText: {fileID: 0}
   musicGameObject: {fileID: 0}
   weaponImage: {fileID: 0}
-  swordSprite: {fileID: 3650304123865126532, guid: 15eb07192dee43dcb169478da3b487d0, type: 3}
-  hammerSprite: {fileID: 393260495992152720, guid: 626be61ea46848f48841509c5271e64f, type: 3}
-  bowSprite: {fileID: -4041009300170039426, guid: 6cd198aefcb544d6aa5f8f37be4f872a, type: 3}
+  swordBasic: {fileID: 11400000, guid: 679bd7aaf2d28ae4b971fd5ed8132f2d, type: 2}
+  swordRed: {fileID: 11400000, guid: 427a8d0a1046f3649a6ee19c652be2b9, type: 2}
+  swordVip: {fileID: 11400000, guid: 33b33514c94e7b34d826ff7c88509694, type: 2}
 --- !u!114 &6027460890400218217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,7 +563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller2D: {fileID: 6662217103251912798}
-  runSpeed: 120
+  runSpeed: 150
 --- !u!114 &6662217103251912798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2410,7 +2410,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3619080167900099078}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.37, y: 3.64, z: 0}
+  m_LocalPosition: {x: 3.37, y: 2.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
