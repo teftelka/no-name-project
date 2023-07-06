@@ -32,8 +32,7 @@ namespace PlayerScripts
 
 		public BoolEvent OnCrouchEvent;
 		private bool m_wasCrouching = false;
-		private bool attacking = false;
-		
+
 		Vector3 targetVelocity;
 
 		private void Awake()

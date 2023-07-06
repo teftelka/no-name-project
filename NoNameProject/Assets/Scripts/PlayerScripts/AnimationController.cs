@@ -38,7 +38,6 @@ namespace PlayerScripts
         public void SetAttackAnimation(int weaponId)
         {
             _animator.SetTrigger("Attack");
-            _animator.SetInteger("Weapon", weaponId);
         }
     }
 }
