@@ -54,8 +54,9 @@ public class Enemy : MonoBehaviour
             
             //откинуть игрока при касании
             Vector2 dir = collision.contacts[0].point - (Vector2)transform.position;
+            //dir.y = 0.2f;
             dir = dir.normalized;
-            player.GetComponent<Rigidbody2D>().AddForce(dir * 30, ForceMode2D.Impulse);
+            player.GetComponent<Rigidbody2D>().AddForce(dir * 15, ForceMode2D.Impulse);
         }
     }
 
