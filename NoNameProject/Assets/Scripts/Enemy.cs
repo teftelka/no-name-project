@@ -59,6 +59,4 @@ public class Enemy : MonoBehaviour
             player.GetComponent<Rigidbody2D>().AddForce(dir * 15, ForceMode2D.Impulse);
         }
     }
-
-
 }
