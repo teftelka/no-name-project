@@ -16,15 +16,14 @@ namespace PlayerScripts
             healthBar.SetMaxHealth(maxHealth);
         }
         
-        void Update()
-        {
-
-        }
-
         public void TakeDamage(int damage)
         {
             currentHealth -= damage;
             healthBar.SetHealth(currentHealth);
+            if (currentHealth < 0)
+            {
+                FindObjectOfType<GameManager>().EndGame();
+            }
         }
     }
 }

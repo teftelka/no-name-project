@@ -26,8 +26,6 @@ namespace PlayerScripts
             var a = 0 - lastHorizontal;
             var b = 0 - horizontal;
             
-            Debug.Log(lastHorizontal + "last");
-            Debug.Log(horizontal + "new");
             if ((a >= 0 &&  b >=0) || (a <= 0 &&  b <=0))
             {
                 controller2D.Move(horizontal * Time.fixedDeltaTime, false, jump);
