@@ -21,6 +21,7 @@ public class PlatformItems : MonoBehaviour
         if (col.gameObject.CompareTag("Player") && col is BoxCollider2D && itemsCount != 0)
         {
             var newCoin = Instantiate(coin, coinSpawnPoint.position, Quaternion.identity, coinSpawnPoint);
+
             ChangeSprite();
             itemsCount--;
         }

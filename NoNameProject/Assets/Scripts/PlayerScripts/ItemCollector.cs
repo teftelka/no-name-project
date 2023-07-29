@@ -21,7 +21,7 @@ public class ItemCollector : MonoBehaviour
         if (col.gameObject.CompareTag("Coin"))
         {
             Destroy(col.gameObject);
-            coins++;
+            coins = coins + col.gameObject.GetComponent<Coin>().coinAmount;
             coinsText.text = "Coins: " + coins;
         }
 

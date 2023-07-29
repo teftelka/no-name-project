@@ -459,6 +459,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlatformCoinV2
       objectReference: {fileID: 0}
+    - target: {fileID: 4278502896452813581, guid: a76c82df7f744fb46a9bfb303a3be0ac, type: 3}
+      propertyPath: coin
+      value: 
+      objectReference: {fileID: 505518404929959576, guid: 0120b240a9b68a140a80867c94484109, type: 3}
+    - target: {fileID: 4495823698544393660, guid: a76c82df7f744fb46a9bfb303a3be0ac, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.09
+      objectReference: {fileID: 0}
     - target: {fileID: 6147628226707074581, guid: a76c82df7f744fb46a9bfb303a3be0ac, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -2056,6 +2064,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlatformWith2Coin
       objectReference: {fileID: 0}
+    - target: {fileID: 4495823698544393660, guid: 514a1d9be80b1e048888e6efd2acdd71, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 4836811824267298371, guid: 514a1d9be80b1e048888e6efd2acdd71, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.89
+      objectReference: {fileID: 0}
     - target: {fileID: 6147628226707074581, guid: 514a1d9be80b1e048888e6efd2acdd71, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -3509,7 +3525,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8433689233516433289, guid: 0120b240a9b68a140a80867c94484109, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.101281
+      value: -0.49
       objectReference: {fileID: 0}
     - target: {fileID: 8433689233516433289, guid: 0120b240a9b68a140a80867c94484109, type: 3}
       propertyPath: m_LocalPosition.z
