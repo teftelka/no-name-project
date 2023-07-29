@@ -35,7 +35,7 @@ namespace PlayerScripts
             }
         }
 
-        public void SetAttackAnimation(int weaponId)
+        public void SetAttackAnimation()
         {
             _animator.SetTrigger("Attack");
         }

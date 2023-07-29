@@ -32,5 +32,13 @@ public class ItemCollector : MonoBehaviour
             Destroy(col.gameObject);
             playerHealth.AddHealth(healthAmount);
         }
+        
+        if (col.gameObject.CompareTag("Weapon"))
+        {
+            var weaponSO = col.gameObject.GetComponent<Weapon>().GetWeaponSO();
+            
+            gameObject.GetComponent<PlayerCombat>().AddWeapon(weaponSO);
+            Destroy(col.gameObject);
+        }
     }
 }

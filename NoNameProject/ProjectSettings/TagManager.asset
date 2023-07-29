@@ -10,6 +10,7 @@ TagManager:
   - PlayerPivot
   - Enemy
   - Heart
+  - Weapon
   layers:
   - Default
   - TransparentFX

@@ -5,6 +5,7 @@ using DigitalRuby.AdvancedPolygonCollider;
 using PlayerScripts;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = System.Random;
 
 public class Enemy : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class Enemy : MonoBehaviour
     public bool IsDead;
 
     private GameObject player;
+
+    [SerializeField] private GameObject coin;
+    [SerializeField] private GameObject heart;
 
     void Start()
     {
@@ -36,6 +40,8 @@ public class Enemy : MonoBehaviour
                 IsDead = true;
                 animator.SetBool("IsDead", true);
                 gameObject.GetComponent<EnemyPatrol>().StopPatrolling();
+                
+                Invoke(nameof(InstantiateItem), 0.5f);
             }
         }
     }
@@ -58,5 +64,19 @@ public class Enemy : MonoBehaviour
             dir = dir.normalized;
             player.GetComponent<Rigidbody2D>().AddForce(dir * 15, ForceMode2D.Impulse);
         }
+    }
+
+    private void InstantiateItem()
+    {
+        var random = new Random();
+        if (random.Next(0,2) == 0)
+        {
+            Instantiate(coin, gameObject.transform.position, Quaternion.identity);
+        }
+        else
+        {
+            Instantiate(heart, gameObject.transform.position, Quaternion.identity);
+        }
+        
     }
 }

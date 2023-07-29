@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlatformItems : MonoBehaviour
 {
     [SerializeField] private GameObject coin;
+    [SerializeField] private GameObject heart;
     [SerializeField] private Transform coinSpawnPoint;
     [SerializeField] private Sprite block;
     private int itemsCount = 1;
@@ -21,6 +22,7 @@ public class PlatformItems : MonoBehaviour
         if (col.gameObject.CompareTag("Player") && col is BoxCollider2D && itemsCount != 0)
         {
             var newCoin = Instantiate(coin, coinSpawnPoint.position, Quaternion.identity, coinSpawnPoint);
+            //var newCoin = Instantiate(heart, coinSpawnPoint.position, Quaternion.identity, coinSpawnPoint);
 
             ChangeSprite();
             itemsCount--;
