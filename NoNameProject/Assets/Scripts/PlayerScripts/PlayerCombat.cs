@@ -40,7 +40,9 @@ namespace PlayerScripts
 
         [SerializeField] private SpriteRenderer rightHandWeapon;
         private WeaponSO currentWeapon;
-    
+        
+        private 
+        
         void Start()
         {
             SetCurrentWeapon(swordBasic);
@@ -75,7 +77,7 @@ namespace PlayerScripts
                 SetWeaponImage();
             }
         }
-
+        
         private void FixedUpdate()
         {
 
@@ -84,7 +86,7 @@ namespace PlayerScripts
         private void Attack()
         {
             transform.GetComponent<AnimationController>().SetAttackAnimation(weaponId);
-        
+
             GetEnemiesHit();
             SetCrit(false);
         }
