@@ -25,5 +25,16 @@ namespace PlayerScripts
                 FindObjectOfType<GameManager>().EndGame();
             }
         }
+
+        public void AddHealth(int healthAmount)
+        {
+            currentHealth = currentHealth + healthAmount;
+            
+            if (currentHealth > maxHealth)
+            {
+                currentHealth = maxHealth;
+            }
+            healthBar.SetHealth(currentHealth);
+        }
     }
 }

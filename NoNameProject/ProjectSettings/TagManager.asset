@@ -9,6 +9,7 @@ TagManager:
   - Coin
   - PlayerPivot
   - Enemy
+  - Heart
   layers:
   - Default
   - TransparentFX
