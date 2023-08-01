@@ -2643,14 +2643,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 556269380}
     - target: {fileID: 3335162927281070851, guid: fec00fde06a86b142a8c1db10a1f3e44, type: 3}
-      propertyPath: sphere
-      value: 
-      objectReference: {fileID: 6190766406105363782, guid: 722965eee0bf30849b4bb2f288ef0d75, type: 3}
-    - target: {fileID: 3335162927281070851, guid: fec00fde06a86b142a8c1db10a1f3e44, type: 3}
-      propertyPath: enemiesText
-      value: 
-      objectReference: {fileID: 78523416}
-    - target: {fileID: 3335162927281070851, guid: fec00fde06a86b142a8c1db10a1f3e44, type: 3}
       propertyPath: weaponImage
       value: 
       objectReference: {fileID: 761525162}

@@ -103,7 +103,8 @@ namespace PlayerScripts
             Transform sphereTransform = Instantiate(sphere, attackPoint.position, Quaternion.identity);
 
             var shootDir = transform.localScale.x > 0 ? Vector3.left : Vector3.right;
-            sphereTransform.GetComponent<Sphere>().Setup(shootDir);
+            sphereTransform.GetComponent<Sphere>().Setup(shootDir, isCriticalHit);
+            SetCrit(false);
         }
 
         private void Attack()

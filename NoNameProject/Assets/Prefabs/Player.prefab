@@ -547,13 +547,13 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 1024
-  enemiesText: {fileID: 0}
   musicGameObject: {fileID: 0}
   weaponImage: {fileID: 0}
   swordBasic: {fileID: 11400000, guid: 679bd7aaf2d28ae4b971fd5ed8132f2d, type: 2}
   swordRed: {fileID: 11400000, guid: 427a8d0a1046f3649a6ee19c652be2b9, type: 2}
   swordVip: {fileID: 11400000, guid: 33b33514c94e7b34d826ff7c88509694, type: 2}
   rightHandWeapon: {fileID: 212000011912858388}
+  sphere: {fileID: 6190766406105363782, guid: 722965eee0bf30849b4bb2f288ef0d75, type: 3}
 --- !u!114 &6027460890400218217
 MonoBehaviour:
   m_ObjectHideFlags: 0
