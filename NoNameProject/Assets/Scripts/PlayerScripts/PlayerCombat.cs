@@ -43,6 +43,8 @@ namespace PlayerScripts
         
         [SerializeField] private SpriteRenderer rightHandWeapon;
         private WeaponSO currentWeapon;
+
+        [SerializeField] private Transform sphere;
         
         void Start()
         {
@@ -51,8 +53,6 @@ namespace PlayerScripts
             weaponId = 0;
         
             musicGameObject.GetComponent<MusicBit>().ActionBitHit += GetMusicBit;
-            
-            
         }
     
         void Update()
@@ -80,6 +80,25 @@ namespace PlayerScripts
                 ChangeAttackWeapon();
                 ChangeWeaponImage();
             }
+            
+            if (Input.GetButtonDown("DistanceAttack"))
+            {
+                DistanceAttack();
+            }
+            
+        }
+
+        /*private bool AttackReadyCheck()
+        {
+            
+        }*/
+
+        private void DistanceAttack()
+        {
+            Transform sphereTransform = Instantiate(sphere, attackPoint.position, Quaternion.identity);
+
+            var shootDir = transform.localScale.x > 0 ? Vector3.left : Vector3.right;
+            sphereTransform.GetComponent<Sphere>().Setup(shootDir);
         }
 
         private void Attack()
