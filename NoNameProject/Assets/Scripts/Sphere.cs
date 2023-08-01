@@ -7,6 +7,8 @@ public class Sphere : MonoBehaviour
 {
     private Vector3 shootDir;
     [SerializeField] private int sphereDamage = 100;
+    List<Enemy> enemies = new List<Enemy>();
+    
     
     public void Setup(Vector3 shootDir)
     {
@@ -23,11 +25,13 @@ public class Sphere : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D col)
     {
         Enemy enemy = col.GetComponent<Enemy>();
-        if (enemy != null)
+
+        if (enemy != null && !enemies.Contains(enemy))
         {
             enemy.TakeDamage(sphereDamage, false);
             Destroy(gameObject);
         }
-            
+        
+        enemies.Add(enemy);
     }
 }
