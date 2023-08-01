@@ -17,8 +17,10 @@ namespace PlayerScripts
         public float attackRange = 0.5f;
         public LayerMask enemyLayers;
 
-        private float attackRate = 4f;
+        private float attackRateMelee = 4f;
+        private float attackRateDistance = 4f;
         private float nextAttackTime = 0f;
+        private float nextDistanceAttackTime = 0f;
     
         [SerializeField] private Text enemiesText;  
         private int enemiesDied = 0;
@@ -61,37 +63,40 @@ namespace PlayerScripts
             {
                 if (Input.GetButtonDown("Attack"))
                 {
-                    hitTime = Time.time;
-                    nextAttackTime = Time.time + 1f / attackRate;
-
-                    float hitDelay = hitTime - bitTime;
-                    if ( hitDelay is <= 0.3f or >= 1.72f)
-                    {
-                        SetCrit(true);
-                    }
-                
+                    nextAttackTime = Time.time + 1f / attackRateMelee;
+                    CheckIfCriticalHit();
+                    
                     Attack();
-                
-                    //Debug.Log(hitDelay);
                 }
             }
+            
+            if (Time.time >= nextDistanceAttackTime)
+            {
+                if (Input.GetButtonDown("DistanceAttack"))
+                {
+                    nextDistanceAttackTime = Time.time + 1f / attackRateDistance;
+                    CheckIfCriticalHit();
+                
+                    DistanceAttack();
+                }
+            }
+            
             if (Input.GetButtonDown("Weapon"))
             {
                 ChangeAttackWeapon();
                 ChangeWeaponImage();
             }
-            
-            if (Input.GetButtonDown("DistanceAttack"))
-            {
-                DistanceAttack();
-            }
-            
         }
 
-        /*private bool AttackReadyCheck()
+        private void CheckIfCriticalHit()
         {
-            
-        }*/
+            hitTime = Time.time;
+            float hitDelay = hitTime - bitTime;
+            if ( hitDelay is <= 0.3f or >= 1.72f)
+            {
+                SetCrit(true);
+            }
+        }
 
         private void DistanceAttack()
         {
@@ -171,6 +176,8 @@ namespace PlayerScripts
             }
             enemiesHit.Clear();
         }
+        
+        
 
         private void OnDrawGizmosSelected()
         {
