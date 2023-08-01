@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using DigitalRuby.AdvancedPolygonCollider;
 using PlayerScripts;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = System.Random;
 
@@ -14,13 +10,20 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int damage = 30;
 
     private Animator animator;
-    public bool IsDead;
+    private bool isDead;
 
     private GameObject player;
 
     [SerializeField] private GameObject coin;
     [SerializeField] private GameObject heart;
 
+    private ScoreManager scoreManager;
+    
+    private void Awake()
+    {
+        scoreManager = FindObjectOfType<ScoreManager>();
+    }
+    
     void Start()
     {
         health = maxHealth;
@@ -29,7 +32,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damageAmount, bool isCriticalDamage)
     {
-        if (!IsDead)
+        if (!isDead)
         {
             health -= damageAmount;
             animator.SetTrigger("Hurt");
@@ -37,7 +40,8 @@ public class Enemy : MonoBehaviour
 
             if (health <= 0)
             {
-                IsDead = true;
+                isDead = true;
+                
                 animator.SetBool("IsDead", true);
                 gameObject.GetComponent<EnemyPatrol>().StopPatrolling();
                 
@@ -46,8 +50,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public bool IsDead()
+    {
+        return isDead;
+    }
+
     private void Death()
     {
+        scoreManager.AddPoints(1);
         Destroy(gameObject);
     }
 

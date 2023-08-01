@@ -8,8 +8,13 @@ public class Sphere : MonoBehaviour
     private Vector3 shootDir;
     [SerializeField] private int sphereDamage = 100;
     List<Enemy> enemies = new List<Enemy>();
-    
-    
+    private ScoreManager scoreManager;
+
+    private void Awake()
+    {
+        scoreManager = FindObjectOfType<ScoreManager>();
+    }
+
     public void Setup(Vector3 shootDir)
     {
         this.shootDir = shootDir;

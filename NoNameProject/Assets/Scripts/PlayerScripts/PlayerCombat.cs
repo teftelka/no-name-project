@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace PlayerScripts
@@ -21,10 +23,7 @@ namespace PlayerScripts
         private float attackRateDistance = 4f;
         private float nextAttackTime = 0f;
         private float nextDistanceAttackTime = 0f;
-    
-        [SerializeField] private Text enemiesText;  
-        private int enemiesDied = 0;
-    
+        
         [SerializeField] private GameObject musicGameObject;
         private float bitTime;
         private float hitTime;
@@ -48,6 +47,7 @@ namespace PlayerScripts
 
         [SerializeField] private Transform sphere;
         
+
         void Start()
         {
             weapons.Add(swordBasic);
@@ -163,22 +163,16 @@ namespace PlayerScripts
             foreach (Collider2D enemy in hitEnemies)
             {
                 _enemy = enemy.GetComponent<Enemy>();
-                if (!_enemy.IsDead && !enemiesHit.Contains(enemy.name))
+                if (!_enemy.IsDead() && !enemiesHit.Contains(enemy.name))
                 {
                     _enemy.TakeDamage(attackDamage, isCriticalHit);
                     enemiesHit.Add(enemy.name);
-                    if (_enemy.IsDead)
-                    {
-                        enemiesDied++;
-                        enemiesText.text = "Enemies: " + enemiesDied;
-                    }
                 }
             }
             enemiesHit.Clear();
         }
         
         
-
         private void OnDrawGizmosSelected()
         {
             if (attackPoint == null)
