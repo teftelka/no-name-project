@@ -18,10 +18,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject heart;
 
     private ScoreManager scoreManager;
-    
+
+    [SerializeField] private GameObject pfHealthBar;
+    private GameObject healthBar;
+
     private void Awake()
     {
         scoreManager = FindObjectOfType<ScoreManager>();
+        healthBar = Instantiate(pfHealthBar, transform.position + new Vector3(0, 2.5f), Quaternion.identity, transform);
     }
     
     void Start()
@@ -38,9 +42,12 @@ public class Enemy : MonoBehaviour
             animator.SetTrigger("Hurt");
             DamagePopup.Create(transform.position, damageAmount, isCriticalDamage);
 
+            HealthBarChanged();
+
             if (health <= 0)
             {
                 isDead = true;
+                healthBar.SetActive(false);
                 
                 animator.SetBool("IsDead", true);
                 gameObject.GetComponent<EnemyPatrol>().StopPatrolling();
@@ -49,6 +56,14 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+
+    private void HealthBarChanged()
+    {
+        float healthPercentage = (float)health / maxHealth;
+        if (healthPercentage < 0) healthPercentage = 0;
+        healthBar.GetComponent<EnemyHealthBar>().SetSize(healthPercentage);
+    }
+    
 
     public bool IsDead()
     {
@@ -86,6 +101,10 @@ public class Enemy : MonoBehaviour
         {
             Instantiate(heart, gameObject.transform.position, Quaternion.identity);
         }
-        
+    }
+
+    public Transform GetHealthBar()
+    {
+        return healthBar.transform;
     }
 }

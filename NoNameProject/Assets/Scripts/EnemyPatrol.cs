@@ -12,6 +12,8 @@ public class EnemyPatrol : MonoBehaviour
     private Transform currentPoint;
     private int yRotation;
 
+    private Transform healthBar;
+
     [SerializeField] private float speed = 2f;
 
     void Start()
@@ -23,6 +25,8 @@ public class EnemyPatrol : MonoBehaviour
         currentPoint = yRotation == 180 ? pointA.transform : pointB.transform;
         anim.SetBool("IsWalking", true);
         anim.SetFloat("Speed", speed);
+
+        healthBar = gameObject.GetComponent<Enemy>().GetHealthBar();
     }
 
     void Update()
@@ -38,24 +42,26 @@ public class EnemyPatrol : MonoBehaviour
 
         if (currentPoint.position.x - transform.position.x < 0.5f && currentPoint == pointB.transform)
         {
-            Flip();
+            Flip(transform);
+            Flip(healthBar);
             currentPoint = pointA.transform;
         }
         
         if (currentPoint.position.x - transform.position.x > -0.5f && currentPoint == pointA.transform)
         {
-            Flip();
+            Flip(transform);
+            Flip(healthBar);
             currentPoint = pointB.transform;
         }
     }
 
-    private void Flip()
+    private void Flip(Transform transform)
     {
         Vector3 localScale = transform.localScale;
         localScale.x *= -1;
         transform.localScale = localScale;
     }
-    
+
     public void StopPatrolling()
     {
         speed = 0;

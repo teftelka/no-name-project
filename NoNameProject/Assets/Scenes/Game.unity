@@ -442,6 +442,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7647862581023942508, guid: 2b618708d89a1a64ba752fa4b87a9e5b, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 4981310066571782098, guid: ec19a6ac591810b4397ba0494ff3b20f, type: 3}
+    - target: {fileID: 7647862581023942508, guid: 2b618708d89a1a64ba752fa4b87a9e5b, type: 3}
+      propertyPath: pfHealthBar
+      value: 
+      objectReference: {fileID: 2319844808648995734, guid: ec19a6ac591810b4397ba0494ff3b20f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1867,7 +1875,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 500
   m_WholeNumbers: 1
-  m_Value: 0
+  m_Value: 33
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2853,6 +2861,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7647862581023942508, guid: 2b618708d89a1a64ba752fa4b87a9e5b, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 4981310066571782098, guid: ec19a6ac591810b4397ba0494ff3b20f, type: 3}
+    - target: {fileID: 7647862581023942508, guid: 2b618708d89a1a64ba752fa4b87a9e5b, type: 3}
+      propertyPath: pfHealthBar
+      value: 
+      objectReference: {fileID: 2319844808648995734, guid: ec19a6ac591810b4397ba0494ff3b20f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3694,6 +3710,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7647862581023942508, guid: 2b618708d89a1a64ba752fa4b87a9e5b, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 4981310066571782098, guid: ec19a6ac591810b4397ba0494ff3b20f, type: 3}
+    - target: {fileID: 7647862581023942508, guid: 2b618708d89a1a64ba752fa4b87a9e5b, type: 3}
+      propertyPath: pfHealthBar
+      value: 
+      objectReference: {fileID: 2319844808648995734, guid: ec19a6ac591810b4397ba0494ff3b20f, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
