@@ -166,7 +166,7 @@ namespace PlayerScripts
                 _enemy = enemy.GetComponent<Enemy>();
                 if (!_enemy.IsDead() && !enemiesHit.Contains(enemy.name))
                 {
-                    _enemy.TakeDamage(attackDamage, isCriticalHit);
+                    _enemy.TakeDamage(attackDamage, isCriticalHit, true);
                     enemiesHit.Add(enemy.name);
                 }
             }

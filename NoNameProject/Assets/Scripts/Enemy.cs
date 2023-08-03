@@ -21,22 +21,40 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private GameObject pfHealthBar;
     private GameObject healthBar;
+    private EnemyHealthBar enemyHealthBar;
+
+    private float armorRate = 100;
+    private float currentArmorRate;
+    private float armorPercentage;
 
     private void Awake()
     {
         scoreManager = FindObjectOfType<ScoreManager>();
         healthBar = Instantiate(pfHealthBar, transform.position + new Vector3(0, 2.5f), Quaternion.identity, transform);
+
+        enemyHealthBar = healthBar.GetComponent<EnemyHealthBar>();
     }
-    
+
     void Start()
     {
         health = maxHealth;
+        SetArmor();
+        
         animator = GetComponent<Animator>();
     }
 
-    public void TakeDamage(int damageAmount, bool isCriticalDamage)
+    public void TakeDamage(int damageAmount, bool isCriticalDamage, bool meleeAttack)
     {
-        if (!isDead)
+        if (!isDead && meleeAttack && currentArmorRate > 0)
+        {
+            currentArmorRate -= damageAmount;
+            
+            armorPercentage = currentArmorRate / maxHealth;
+            if (armorPercentage < 0) armorPercentage = 0;
+            enemyHealthBar.SetArmorSize(armorPercentage); 
+        }
+
+        else if (!isDead && currentArmorRate <= 0)
         {
             health -= damageAmount;
             animator.SetTrigger("Hurt");
@@ -61,7 +79,14 @@ public class Enemy : MonoBehaviour
     {
         float healthPercentage = (float)health / maxHealth;
         if (healthPercentage < 0) healthPercentage = 0;
-        healthBar.GetComponent<EnemyHealthBar>().SetSize(healthPercentage);
+        enemyHealthBar.SetSize(healthPercentage);
+    }
+
+    private void SetArmor()
+    {
+        currentArmorRate = armorRate;
+        armorPercentage = armorRate / maxHealth;
+        enemyHealthBar.SetArmorSize(armorPercentage);
     }
     
 

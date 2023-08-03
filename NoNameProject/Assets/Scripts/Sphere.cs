@@ -48,7 +48,7 @@ public class Sphere : MonoBehaviour
 
         if (enemy != null && !enemies.Contains(enemy))
         {
-            enemy.TakeDamage(sphereDamage, false);
+            enemy.TakeDamage(sphereDamage, false, false);
             Destroy(gameObject);
         }
         
