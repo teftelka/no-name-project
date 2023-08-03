@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
     private EnemyHealthBar enemyHealthBar;
 
     private float armorRate = 100;
+    private bool isMeleeArmor = true;
     private float currentArmorRate;
     private float armorPercentage;
 
@@ -45,13 +46,13 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damageAmount, bool isCriticalDamage, bool meleeAttack)
     {
-        if (!isDead && meleeAttack && currentArmorRate > 0)
+        if (!isDead && currentArmorRate > 0)
         {
-            currentArmorRate -= damageAmount;
-            
-            armorPercentage = currentArmorRate / maxHealth;
-            if (armorPercentage < 0) armorPercentage = 0;
-            enemyHealthBar.SetArmorSize(armorPercentage); 
+            if (meleeAttack && isMeleeArmor || !meleeAttack && !isMeleeArmor)
+            {
+                ArmorDamage(damageAmount);
+                DamagePopup.Create(transform.position, damageAmount, false);
+            }
         }
 
         else if (!isDead && currentArmorRate <= 0)
@@ -75,6 +76,16 @@ public class Enemy : MonoBehaviour
         }
     }
 
+
+    private void ArmorDamage(int damageAmount)
+    {
+        currentArmorRate -= damageAmount;
+            
+        armorPercentage = currentArmorRate / maxHealth;
+        if (armorPercentage < 0) armorPercentage = 0;
+        enemyHealthBar.SetArmorSize(armorPercentage); 
+    }
+
     private void HealthBarChanged()
     {
         float healthPercentage = (float)health / maxHealth;
@@ -87,6 +98,11 @@ public class Enemy : MonoBehaviour
         currentArmorRate = armorRate;
         armorPercentage = armorRate / maxHealth;
         enemyHealthBar.SetArmorSize(armorPercentage);
+        
+        if (!isMeleeArmor)
+        {
+            enemyHealthBar.SetArmorColor(false);
+        }
     }
     
 
