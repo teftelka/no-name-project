@@ -89,8 +89,7 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-
-
+    
     private void ArmorDamage(int damageAmount)
     {
         currentArmorRate -= damageAmount;
