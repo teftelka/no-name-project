@@ -5,10 +5,12 @@ using Random = System.Random;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private int health;
-    [SerializeField] private int maxHealth = 300;
-    [SerializeField] private int damage = 30;
+    private int health;
+    private int maxHealth;
+    private int damage;
 
+    [SerializeField] private EnemySO enemySo;
+    
     private Animator animator;
     private bool isDead;
 
@@ -23,8 +25,9 @@ public class Enemy : MonoBehaviour
     private GameObject healthBar;
     private EnemyHealthBar enemyHealthBar;
 
-    private float armorRate = 100;
-    private bool isMeleeArmor = true;
+    private float armorRate;
+    private bool isArmor;
+    private string armorType;
     private float currentArmorRate;
     private float armorPercentage;
 
@@ -38,40 +41,51 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        maxHealth = enemySo.maxHealth;
+        damage = enemySo.damage;
+        isArmor = enemySo.isArmor;
+        if (isArmor)
+        {
+            armorRate = enemySo.armorRate;
+            armorType = enemySo.armorType;
+            SetArmor();
+        }
+
         health = maxHealth;
-        SetArmor();
-        
         animator = GetComponent<Animator>();
     }
 
     public void TakeDamage(int damageAmount, bool isCriticalDamage, bool meleeAttack)
     {
-        if (!isDead && currentArmorRate > 0)
+        if (!isDead)
         {
-            if (meleeAttack && isMeleeArmor || !meleeAttack && !isMeleeArmor)
+            if (isArmor)
             {
-                ArmorDamage(damageAmount);
-                DamagePopup.Create(transform.position, damageAmount, false);
+                if (meleeAttack && armorType == "melee" || !meleeAttack && armorType == "distance")
+                {
+                    ArmorDamage(damageAmount);
+                    DamagePopup.Create(transform.position, damageAmount, false);
+                }
             }
-        }
 
-        else if (!isDead && currentArmorRate <= 0)
-        {
-            health -= damageAmount;
-            animator.SetTrigger("Hurt");
-            DamagePopup.Create(transform.position, damageAmount, isCriticalDamage);
-
-            HealthBarChanged();
-
-            if (health <= 0)
+            else
             {
-                isDead = true;
-                healthBar.SetActive(false);
+                health -= damageAmount;
+                animator.SetTrigger("Hurt");
+                DamagePopup.Create(transform.position, damageAmount, isCriticalDamage);
+
+                HealthBarChanged();
+
+                if (health <= 0)
+                {
+                    isDead = true;
+                    healthBar.SetActive(false);
                 
-                animator.SetBool("IsDead", true);
-                gameObject.GetComponent<EnemyPatrol>().StopPatrolling();
+                    animator.SetBool("IsDead", true);
+                    gameObject.GetComponent<EnemyPatrol>().StopPatrolling();
                 
-                Invoke(nameof(InstantiateItem), 0.5f);
+                    Invoke(nameof(InstantiateItem), 0.5f);
+                }
             }
         }
     }
@@ -82,7 +96,11 @@ public class Enemy : MonoBehaviour
         currentArmorRate -= damageAmount;
             
         armorPercentage = currentArmorRate / maxHealth;
-        if (armorPercentage < 0) armorPercentage = 0;
+        if (armorPercentage < 0)
+        {
+            armorPercentage = 0;
+            isArmor = false;
+        }
         enemyHealthBar.SetArmorSize(armorPercentage); 
     }
 
@@ -99,10 +117,7 @@ public class Enemy : MonoBehaviour
         armorPercentage = armorRate / maxHealth;
         enemyHealthBar.SetArmorSize(armorPercentage);
         
-        if (!isMeleeArmor)
-        {
-            enemyHealthBar.SetArmorColor(false);
-        }
+        enemyHealthBar.SetArmorColor(armorType);
     }
     
 

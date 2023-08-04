@@ -20,6 +20,10 @@ PrefabInstance:
       propertyPath: heart
       value: 
       objectReference: {fileID: 505518404929959576, guid: e16b8a980c744e44ebc9500e33c57aa9, type: 3}
+    - target: {fileID: 701241964256190098, guid: c1cab495aa7c07444a521e6580586aae, type: 3}
+      propertyPath: pfHealthBar
+      value: 
+      objectReference: {fileID: 2319844808648995734, guid: ec19a6ac591810b4397ba0494ff3b20f, type: 3}
     - target: {fileID: 3749819851544428504, guid: c1cab495aa7c07444a521e6580586aae, type: 3}
       propertyPath: m_RootOrder
       value: -1

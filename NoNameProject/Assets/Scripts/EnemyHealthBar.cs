@@ -26,15 +26,15 @@ public class EnemyHealthBar : MonoBehaviour
         armorBar.localScale = new Vector3(sizeNormalized, 1f);
     }
 
-    public void SetArmorColor(bool isArmorMelee)
+    public void SetArmorColor(string armorType)
     {
-        if (isArmorMelee)
+        if (armorType == "melee")
         {
-            armorBar.GetComponentInChildren<SpriteRenderer>().color = UtilsClass.GetColorFromString("DDD357");
+            armorBarSprite.color = UtilsClass.GetColorFromString("DDD357");
         }
         else
         {
-            armorBar.GetComponentInChildren<SpriteRenderer>().color = UtilsClass.GetColorFromString("9C07FF");
+            armorBarSprite.color = UtilsClass.GetColorFromString("9C07FF");
         }
     }
     
