@@ -74,11 +74,11 @@ public class Enemy : MonoBehaviour
                 animator.SetTrigger("Hurt");
                 DamagePopup.Create(transform.position, damageAmount, isCriticalDamage);
 
-                HealthBarChanged();
+                HealthBarChanged(); 
 
                 if (health <= 0)
                 {
-                    isDead = true;
+                    isDead = true; 
                     healthBar.SetActive(false);
                 
                     animator.SetBool("IsDead", true);
@@ -148,14 +148,7 @@ public class Enemy : MonoBehaviour
     private void InstantiateItem()
     {
         var random = new Random();
-        if (random.Next(0,2) == 0)
-        {
-            Instantiate(coin, gameObject.transform.position, Quaternion.identity);
-        }
-        else
-        {
-            Instantiate(heart, gameObject.transform.position, Quaternion.identity);
-        }
+        Instantiate(random.Next(0, 2) == 0 ? coin : heart, gameObject.transform.position, Quaternion.identity);
     }
 
     public Transform GetHealthBar()

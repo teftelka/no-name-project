@@ -38,12 +38,15 @@ public class MusicBit : MonoBehaviour
         {
             previousBit = nextActionTime;
             nextActionTime += period;
+            
+            ActionBitHit?.Invoke(previousBit);
+            
             bitBar.GetComponent<SpriteRenderer>().color = Color.Lerp(currentBitBarColor, redColor, 0.5f);
             //ChangeBitBarColor(redColor);
             
             //Debug.Log("Bit");
             //Debug.Log(nextActionTime - pre);
-            ActionBitHit?.Invoke(previousBit);
+            
         }
         
         //Debug.Log(Time.time + " Time time");
