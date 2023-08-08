@@ -14,11 +14,12 @@ namespace PlayerScripts
         {
             lastHorizontal = horizontal;
             horizontal = Input.GetAxisRaw("Horizontal") * runSpeed;
+            
+        }
 
-            if (Input.GetButtonDown("Jump"))
-            {
-                jump = true;
-            }
+        public void SetJump()
+        {
+            jump = true;
         }
 
         private void FixedUpdate()
