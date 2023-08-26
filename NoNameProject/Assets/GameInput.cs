@@ -2,32 +2,36 @@ using System;
 using System.Collections.Generic;
 using PlayerScripts;
 using UnityEngine;
+using UnityEngine.UI;
+using Random = System.Random;
 
 public class GameInput : MonoBehaviour
 {
     private List<KeyCode> inputBuffer = new List<KeyCode>();
     private List<KeyCode> playerInput = new List<KeyCode>();
-    
+
     private PlayerCombat playerCombat;
     private PlayerMovement playerMovement;
     private bool isDistanceAttack;
+
+    private AttackComboVisual attackComboVisual;
+
+    [SerializeField] private SpellSO[] spellSo;
+    private List<Sprite> comboImages;
+    private int currentSpell;
 
     private void Start()
     {
         playerCombat = FindObjectOfType<PlayerCombat>();
         playerMovement = FindObjectOfType<PlayerMovement>();
+        attackComboVisual = FindObjectOfType<AttackComboVisual>();
         
         if (playerCombat == null)
         {
             Debug.LogWarning("PlayerCombat is null!");
         }
-        
-        inputBuffer.Add(KeyCode.JoystickButton3);
-        inputBuffer.Add(KeyCode.JoystickButton3);
-        inputBuffer.Add(KeyCode.JoystickButton0);
-        inputBuffer.Add(KeyCode.JoystickButton1);
     }
-    
+
     void Update()
     {
         if (Input.anyKeyDown && isDistanceAttack)
@@ -41,6 +45,16 @@ public class GameInput : MonoBehaviour
         }
     }
 
+    private void SetNextSpell()
+    {
+        Random rnd = new Random();
+        currentSpell  = rnd.Next(spellSo.Length);
+        
+        inputBuffer = spellSo[currentSpell].keyCodes;
+        comboImages = spellSo[currentSpell].arrowSprites;
+        attackComboVisual.SetAttackCombo(comboImages);
+    }
+
     private void HandleAttackCombination()
     {
         KeyCode lastButton = GetLastButton();
@@ -51,12 +65,13 @@ public class GameInput : MonoBehaviour
 
             if (!CheckCombination())
             {
-                Clear();
+                Invoke(nameof(Clear), 0.2f);
+                //Clear();
             }
             
             else if (inputBuffer.Count == playerInput.Count)
             {
-                playerCombat.HandleDistanceAttack();
+                playerCombat.HandleDistanceAttack(spellSo[currentSpell].damage);
                 Clear();
             }
         }
@@ -77,6 +92,7 @@ public class GameInput : MonoBehaviour
         else if (Input.GetButtonDown("DistanceAttack"))
         {
             isDistanceAttack = true;
+            SetNextSpell();
         }
 
         else if (Input.GetButtonDown("Weapon"))
@@ -96,9 +112,10 @@ public class GameInput : MonoBehaviour
         {
             if (playerInput[i] == inputBuffer[i])
             {
+                attackComboVisual.SetCorrectArrowColor(i);
                 continue;
             }
-
+            attackComboVisual.SetIncorrectColor(i);
             return false;
         }
         
@@ -109,6 +126,7 @@ public class GameInput : MonoBehaviour
     {
         isDistanceAttack = false;
         playerInput.Clear();
+        attackComboVisual.RemoveAttackCombo();
     }
 
     private KeyCode GetLastButton()

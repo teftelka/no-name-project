@@ -65,14 +65,18 @@ namespace PlayerScripts
             }
         }
         
-        public void HandleDistanceAttack()
+        public void HandleDistanceAttack(int damage)
         { 
             if (Time.time >= nextDistanceAttackTime)
             {
                 nextDistanceAttackTime = Time.time + 1f / attackRateDistance;
                 CheckIfCriticalHit();
                 
-                DistanceAttack();
+                Transform sphereTransform = Instantiate(sphere, attackPoint.position, Quaternion.identity);
+
+                var shootDir = transform.localScale.x > 0 ? Vector3.left : Vector3.right;
+                sphereTransform.GetComponent<Sphere>().Setup(shootDir, isCriticalHit, damage);
+                SetCrit(false);
             }
         }
         
@@ -90,15 +94,6 @@ namespace PlayerScripts
             {
                 SetCrit(true);
             }
-        }
-        
-        private void DistanceAttack()
-        {
-            Transform sphereTransform = Instantiate(sphere, attackPoint.position, Quaternion.identity);
-
-            var shootDir = transform.localScale.x > 0 ? Vector3.left : Vector3.right;
-            sphereTransform.GetComponent<Sphere>().Setup(shootDir, isCriticalHit);
-            SetCrit(false);
         }
 
         private void Attack()
