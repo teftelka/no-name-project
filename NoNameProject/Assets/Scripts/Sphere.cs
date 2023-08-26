@@ -8,7 +8,7 @@ using CodeMonkey.Utils;
 public class Sphere : MonoBehaviour
 {
     private Vector3 shootDir;
-    [SerializeField] private int sphereDamage = 100;
+    [SerializeField] private int sphereDamage;
     List<Enemy> enemies = new List<Enemy>();
 
     [SerializeField] private Camera camera;
@@ -20,9 +20,10 @@ public class Sphere : MonoBehaviour
         camera = FindObjectOfType<Camera>();
     }
 
-    public void Setup(Vector3 shootDir, bool isCriticalHit)
+    public void Setup(Vector3 shootDir, bool isCriticalHit, int damage)
     {
         this.shootDir = shootDir;
+        sphereDamage = damage;
         if (isCriticalHit)
         {
             sphereDamage *= 2;

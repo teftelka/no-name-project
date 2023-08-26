@@ -10,7 +10,7 @@ namespace PlayerScripts
         private int weaponsTotal;
         private bool attack;
         
-        [SerializeField] public int attackDamage;
+        private int attackDamage;
         public int defaultDamage;
 
         public Transform attackPoint;
@@ -41,7 +41,7 @@ namespace PlayerScripts
         private readonly List<WeaponSO> weapons = new List<WeaponSO>();
         
         [SerializeField] private SpriteRenderer rightHandWeapon;
-        private WeaponSO currentWeapon;
+        private WeaponSO currentWeaponSO;
 
         [SerializeField] private Transform sphere;
         
@@ -54,36 +54,36 @@ namespace PlayerScripts
         
             musicGameObject.GetComponent<MusicBit>().ActionBitHit += GetMusicBit;
         }
-    
-        void Update()
+        
+        public void HandleMeleeAttack()
         {
             if (Time.time >= nextAttackTime)
             {
-                if (Input.GetButtonDown("Attack"))
-                {
-                    nextAttackTime = Time.time + 1f / attackRateMelee;
-                    CheckIfCriticalHit();
-                    
-                    Attack();
-                }
+                nextAttackTime = Time.time + 1f / attackRateMelee;
+                CheckIfCriticalHit();
+                Attack();
             }
-            
+        }
+        
+        public void HandleDistanceAttack(int damage)
+        { 
             if (Time.time >= nextDistanceAttackTime)
             {
-                if (Input.GetButtonDown("DistanceAttack"))
-                {
-                    nextDistanceAttackTime = Time.time + 1f / attackRateDistance;
-                    CheckIfCriticalHit();
+                nextDistanceAttackTime = Time.time + 1f / attackRateDistance;
+                CheckIfCriticalHit();
                 
-                    DistanceAttack();
-                }
+                Transform sphereTransform = Instantiate(sphere, attackPoint.position, Quaternion.identity);
+
+                var shootDir = transform.localScale.x > 0 ? Vector3.left : Vector3.right;
+                sphereTransform.GetComponent<Sphere>().Setup(shootDir, isCriticalHit, damage);
+                SetCrit(false);
             }
-            
-            if (Input.GetButtonDown("Weapon"))
-            {
-                ChangeAttackWeapon();
-                ChangeWeaponImage();
-            }
+        }
+        
+        public void HandleWeaponChange()
+        {
+            ChangeAttackWeapon();
+            ChangeWeaponImage();
         }
 
         private void CheckIfCriticalHit()
@@ -94,15 +94,6 @@ namespace PlayerScripts
             {
                 SetCrit(true);
             }
-        }
-
-        private void DistanceAttack()
-        {
-            Transform sphereTransform = Instantiate(sphere, attackPoint.position, Quaternion.identity);
-
-            var shootDir = transform.localScale.x > 0 ? Vector3.left : Vector3.right;
-            sphereTransform.GetComponent<Sphere>().Setup(shootDir, isCriticalHit);
-            SetCrit(false);
         }
 
         private void Attack()
@@ -124,16 +115,8 @@ namespace PlayerScripts
 
         private void SetCrit(bool isCrit)
         {
-            if (isCrit)
-            {
-                attackDamage *=3;
-                isCriticalHit = true;
-            }
-            else
-            {
-                attackDamage = defaultDamage;
-                isCriticalHit = false;
-            }
+            attackDamage = isCrit ? defaultDamage * 3 : defaultDamage;
+            isCriticalHit = isCrit;
         }
 
         private void ChangeWeaponImage()
@@ -143,11 +126,11 @@ namespace PlayerScripts
 
         private void SetCurrentWeapon(WeaponSO weaponSo)
         {
-            currentWeapon = weaponSo;
-            attackDamage = currentWeapon.damage;
+            currentWeaponSO = weaponSo;
+            attackDamage = currentWeaponSO.damage;
             defaultDamage = attackDamage;
-            rightHandWeapon.sprite = currentWeapon.sprite;
-            weaponImage.sprite = currentWeapon.sprite;
+            rightHandWeapon.sprite = currentWeaponSO.sprite;
+            weaponImage.sprite = currentWeaponSO.sprite;
         }
 
         public void AddWeapon(WeaponSO weaponSo)
@@ -174,10 +157,7 @@ namespace PlayerScripts
         
         private void OnDrawGizmosSelected()
         {
-            if (attackPoint == null)
-            {
-                return;
-            }
+            if (attackPoint == null) return;
             Gizmos.DrawWireSphere(attackPoint.position, attackRange);
         }
 
