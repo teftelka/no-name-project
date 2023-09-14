@@ -65,8 +65,8 @@ public class GameInput : MonoBehaviour
 
             if (!CheckCombination())
             {
+                Time.timeScale = 1;
                 Invoke(nameof(Clear), 0.2f);
-                //Clear();
             }
             
             else if (inputBuffer.Count == playerInput.Count)
@@ -93,6 +93,7 @@ public class GameInput : MonoBehaviour
         {
             isDistanceAttack = true;
             SetNextSpell();
+            Time.timeScale = 0;
         }
 
         else if (Input.GetButtonDown("Weapon"))
@@ -127,6 +128,7 @@ public class GameInput : MonoBehaviour
         isDistanceAttack = false;
         playerInput.Clear();
         attackComboVisual.RemoveAttackCombo();
+        Time.timeScale = 1;
     }
 
     private KeyCode GetLastButton()
