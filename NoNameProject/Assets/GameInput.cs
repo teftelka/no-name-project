@@ -22,6 +22,8 @@ public class GameInput : MonoBehaviour
     private int currentSpell;
     
     public CircleDrawer circleDrawer;
+    private Vector3 shootDirection;
+    private Vector3 closestEnemy;
 
     private void Start()
     {
@@ -42,14 +44,26 @@ public class GameInput : MonoBehaviour
 
     void Update()
     {
+        float inputY = Input.GetAxisRaw("Vertical");
+        float inputX = Input.GetAxisRaw("Horizontal");
+ 
+        shootDirection = new Vector3(inputX, inputY, 0);
+        
         if (Input.anyKeyDown && isDistanceAttack)
         {
             HandleAttackCombination();
+
         }
-        
+
         else if (!isDistanceAttack)
         {
             HandlePlayerInput();
+        }
+        
+        if (isDistanceAttack)
+        {
+            closestEnemy= GetClosestEnemy(GetAllVisibleEnemies(), shootDirection);
+            circleDrawer.DrawCircle(closestEnemy);
         }
     }
 
@@ -79,15 +93,6 @@ public class GameInput : MonoBehaviour
             
             else if (inputBuffer.Count == playerInput.Count)
             {
-                float inputY = Input.GetAxisRaw("Vertical");
-                float inputX = Input.GetAxisRaw("Horizontal");
- 
-                Vector3 shootDirection = new Vector3(inputX, inputY, 0);
-                
-                var closestEnemy= GetClosestEnemy(GetAllVisibleEnemies(), shootDirection);
-                
-                circleDrawer.DrawCircle(closestEnemy);
-
                 playerCombat.HandleDistanceAttack(spellSo[currentSpell].damage, closestEnemy); 
                 Clear();
             }
