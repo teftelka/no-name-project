@@ -65,7 +65,7 @@ namespace PlayerScripts
             }
         }
         
-        public void HandleDistanceAttack(int damage)
+        public void HandleDistanceAttack(int damage, Vector3 distance)
         { 
             if (Time.time >= nextDistanceAttackTime)
             {
@@ -73,12 +73,14 @@ namespace PlayerScripts
                 CheckIfCriticalHit();
                 
                 Transform sphereTransform = Instantiate(sphere, attackPoint.position, Quaternion.identity);
-
-                var shootDir = transform.localScale.x > 0 ? Vector3.left : Vector3.right;
+                
+                
+                var shootDir = distance - attackPoint.position;
                 sphereTransform.GetComponent<Sphere>().Setup(shootDir, isCriticalHit, damage);
                 SetCrit(false);
             }
         }
+        
         
         public void HandleWeaponChange()
         {

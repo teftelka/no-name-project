@@ -9,10 +9,12 @@ public class ItemCollector : MonoBehaviour
     [SerializeField] private Text coinsText;
 
     private PlayerHealth playerHealth;
+    private GameInput gameInput;
     
     private void Start()
     {
         playerHealth = gameObject.GetComponent<PlayerHealth>();
+        gameInput = FindObjectOfType<GameInput>();
     }
 
 
@@ -20,17 +22,16 @@ public class ItemCollector : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Coin"))
         {
-            Destroy(col.gameObject);
             coins = coins + col.gameObject.GetComponent<Coin>().coinAmount;
             coinsText.text = "Coins: " + coins;
+            Destroy(col.gameObject);
         }
 
         if (col.gameObject.CompareTag("Heart"))
         {
             var healthAmount = col.gameObject.GetComponent<Heart>().healthAmount;
-            
-            Destroy(col.gameObject);
             playerHealth.AddHealth(healthAmount);
+            Destroy(col.gameObject);
         }
         
         if (col.gameObject.CompareTag("Weapon"))
@@ -38,6 +39,12 @@ public class ItemCollector : MonoBehaviour
             var weaponSO = col.gameObject.GetComponent<Weapon>().GetWeaponSO();
             
             gameObject.GetComponent<PlayerCombat>().AddWeapon(weaponSO);
+            Destroy(col.gameObject);
+        }
+        
+        if (col.gameObject.CompareTag("Sphere"))
+        {
+            gameInput.StartDistanceAttack();
             Destroy(col.gameObject);
         }
     }

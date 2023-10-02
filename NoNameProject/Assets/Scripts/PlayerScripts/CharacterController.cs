@@ -147,7 +147,7 @@ namespace PlayerScripts
 			}
 		}
 
-		private void Flip()
+		public void Flip()
 		{
 			// Switch the way the player is labelled as facing.
 			m_FacingRight = !m_FacingRight;

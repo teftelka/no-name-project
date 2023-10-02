@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     private int health;
     private int maxHealth;
     private int damage;
+    private Camera mainCamera;
 
     [SerializeField] private EnemySO enemySo;
     
@@ -33,12 +34,13 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
+        mainCamera = Camera.main;
         scoreManager = FindObjectOfType<ScoreManager>();
         healthBar = Instantiate(pfHealthBar, transform.position + new Vector3(0, 2.5f), Quaternion.identity, transform);
 
         enemyHealthBar = healthBar.GetComponent<EnemyHealthBar>();
     }
-
+    
     void Start()
     {
         maxHealth = enemySo.maxHealth;

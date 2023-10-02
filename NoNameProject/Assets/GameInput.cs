@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PlayerScripts;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +20,8 @@ public class GameInput : MonoBehaviour
     [SerializeField] private SpellSO[] spellSo;
     private List<Sprite> comboImages;
     private int currentSpell;
+    
+    public CircleDrawer circleDrawer;
 
     private void Start()
     {
@@ -29,6 +32,11 @@ public class GameInput : MonoBehaviour
         if (playerCombat == null)
         {
             Debug.LogWarning("PlayerCombat is null!");
+        }
+        
+        if (circleDrawer == null)
+        {
+            circleDrawer = FindObjectOfType<CircleDrawer>();
         }
     }
 
@@ -71,15 +79,74 @@ public class GameInput : MonoBehaviour
             
             else if (inputBuffer.Count == playerInput.Count)
             {
-                playerCombat.HandleDistanceAttack(spellSo[currentSpell].damage);
+                float inputY = Input.GetAxisRaw("Vertical");
+                float inputX = Input.GetAxisRaw("Horizontal");
+ 
+                Vector3 shootDirection = new Vector3(inputX, inputY, 0);
+                
+                var closestEnemy= GetClosestEnemy(GetAllVisibleEnemies(), shootDirection);
+                
+                circleDrawer.DrawCircle(closestEnemy);
+
+                playerCombat.HandleDistanceAttack(spellSo[currentSpell].damage, closestEnemy); 
                 Clear();
             }
         }
-        
         else
         {
             Clear();
         }
+    }
+
+    private List<GameObject> GetAllVisibleEnemies()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+        List<GameObject> enemiesList = enemies.ToList();
+
+        for (int i = 0; i < enemiesList.Count; i++)
+        {
+            Vector3 objectScreenPos = Camera.main.WorldToScreenPoint(enemiesList[i].transform.position);
+                    
+            if (objectScreenPos.x > 0 && objectScreenPos.x < Screen.width &&
+                objectScreenPos.y > 0 && objectScreenPos.y < Screen.height &&
+                objectScreenPos.z > 0) 
+            {
+                //Debug.Log("Объект с тегом " + "Enemy" + " виден на экране!");
+                // Ваш код обработки видимого объекта
+            }
+            else
+            {
+                enemiesList.Remove(enemiesList[i]);
+            }
+        }
+
+        return enemiesList;
+    }
+
+    private Vector3 GetClosestEnemy(List<GameObject> enemies, Vector3 direction)
+    {
+        int counter = 0;
+        List <float> angles = new List <float>();
+
+        foreach (var enemy in enemies)
+        {
+            var angle = Vector3.Angle(direction, enemy.transform.position);
+            angles.Add(angle);
+        }
+
+        foreach (var angle in angles)
+        {
+            var min = angles.Min();
+            if (angle == min)
+            {
+                return enemies[counter].transform.position;
+            }
+            else
+            {
+                counter += 1;
+            }
+        }
+        return Vector3.zero;
     }
     
     private void HandlePlayerInput()
@@ -87,13 +154,6 @@ public class GameInput : MonoBehaviour
         if (Input.GetButtonDown("Attack"))
         {
             playerCombat.HandleMeleeAttack();
-        }
-
-        else if (Input.GetButtonDown("DistanceAttack"))
-        {
-            isDistanceAttack = true;
-            SetNextSpell();
-            Time.timeScale = 0;
         }
 
         else if (Input.GetButtonDown("Weapon"))
@@ -106,7 +166,14 @@ public class GameInput : MonoBehaviour
             playerMovement.SetJump();
         }
     }
-    
+
+    public void StartDistanceAttack()
+    {
+        isDistanceAttack = true;
+        SetNextSpell();
+        Time.timeScale = 0;
+    }
+
     private bool CheckCombination()
     {
         for (int i = 0; i < playerInput.Count; i++)
@@ -129,6 +196,14 @@ public class GameInput : MonoBehaviour
         playerInput.Clear();
         attackComboVisual.RemoveAttackCombo();
         Time.timeScale = 1;
+        
+       Invoke(nameof(RemoveCircle), 0.4f);
+    }
+
+
+    private void RemoveCircle()
+    {
+        circleDrawer.RemoveCircle();
     }
 
     private KeyCode GetLastButton()

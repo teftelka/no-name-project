@@ -11,6 +11,7 @@ TagManager:
   - Enemy
   - Heart
   - Weapon
+  - Sphere
   layers:
   - Default
   - TransparentFX
