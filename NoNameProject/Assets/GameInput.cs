@@ -21,9 +21,10 @@ public class GameInput : MonoBehaviour
     private List<Sprite> comboImages;
     private int currentSpell;
     
-    public CircleDrawer circleDrawer;
+    private CircleDrawer circleDrawer;
     private Vector3 shootDirection;
     private Vector3 closestEnemy;
+    private GameObject lastEnemy;
 
     private void Start()
     {
@@ -62,7 +63,7 @@ public class GameInput : MonoBehaviour
         
         if (isDistanceAttack)
         {
-            closestEnemy= GetClosestEnemy(GetAllVisibleEnemies(), shootDirection);
+            closestEnemy = GetClosestEnemy(GetAllVisibleEnemies(), shootDirection);
             circleDrawer.DrawCircle(closestEnemy);
         }
     }
@@ -130,6 +131,11 @@ public class GameInput : MonoBehaviour
 
     private Vector3 GetClosestEnemy(List<GameObject> enemies, Vector3 direction)
     {
+        if (direction == Vector3.zero && enemies.Contains(lastEnemy))
+        {
+            return lastEnemy.transform.position;
+        }
+        
         int counter = 0;
         List <float> angles = new List <float>();
 
@@ -144,7 +150,8 @@ public class GameInput : MonoBehaviour
             var min = angles.Min();
             if (angle == min)
             {
-                return enemies[counter].transform.position;
+                lastEnemy = enemies[counter];
+                return lastEnemy.transform.position;
             }
             else
             {

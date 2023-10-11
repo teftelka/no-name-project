@@ -153,6 +153,11 @@ public class Enemy : MonoBehaviour
         Instantiate(random.Next(0, 2) == 0 ? coin : heart, gameObject.transform.position, Quaternion.identity);
     }
 
+    private void SphereInstantiate()
+    {
+        
+    }
+
     public Transform GetHealthBar()
     {
         return healthBar.transform;
